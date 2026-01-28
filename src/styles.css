@@ -1,3 +1,43 @@
 /* You can add global styles to this file, and also import other style files */
-
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap');
 @import "tailwindcss";
+
+:root {
+  --cream: #f7f1e7;
+  --sand: #efe3d3;
+  --ink: #1d1a15;
+  --gold: #c6a461;
+  --gold-strong: #a4874b;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Source Sans 3', system-ui, -apple-system, sans-serif;
+  background: radial-gradient(circle at top, #fff7ea 0%, var(--cream) 45%, #f1e7d8 100%);
+  color: var(--ink);
+}
+
+.font-display {
+  font-family: 'Playfair Display', 'Times New Roman', serif;
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold uppercase tracking-[0.12em] transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold-strong)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--cream)];
+  }
+
+  .btn-primary {
+    @apply bg-[var(--gold)] text-[var(--ink)] shadow-[0_10px_30px_rgba(184,155,94,0.25)] hover:bg-[var(--gold-strong)];
+  }
+
+  .btn-outline {
+    @apply border border-[var(--gold)] text-[var(--ink)] hover:bg-[var(--gold)]/15;
+  }
+
+  .btn-ghost {
+    @apply text-[var(--ink)] hover:bg-[var(--gold)]/15;
+  }
+}

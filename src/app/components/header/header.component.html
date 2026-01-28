@@ -1,0 +1,80 @@
+<header
+  class="fixed inset-x-0 top-0 z-50 transition duration-300"
+  [ngClass]="{
+    'bg-[var(--cream)]/95 shadow-[0_10px_30px_rgba(0,0,0,0.08)] backdrop-blur': scrolled(),
+    'bg-[var(--cream)]/70 backdrop-blur': !scrolled()
+  }"
+>
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+    <a
+      href="#"
+      class="font-display text-2xl tracking-[0.2em] text-[var(--ink)] transition"
+    >
+      {{ siteName }}
+    </a>
+
+    <nav class="hidden items-center gap-8 text-sm uppercase tracking-[0.2em] md:flex">
+      <a
+        *ngFor="let item of navItems"
+        [href]="item.href"
+        class="text-[var(--ink)]/80 transition hover:text-[var(--ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold-strong)]"
+      >
+        {{ item.label }}
+      </a>
+    </nav>
+
+    <button
+      class="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--gold)]/40 md:hidden"
+      type="button"
+      aria-label="Otwórz menu"
+      [attr.aria-expanded]="menuOpen()"
+      (click)="toggleMenu()"
+    >
+      <span class="sr-only">Menu</span>
+      <div class="space-y-1">
+        <span class="block h-0.5 w-5 bg-[var(--ink)] transition"></span>
+        <span class="block h-0.5 w-5 bg-[var(--ink)] transition"></span>
+        <span class="block h-0.5 w-5 bg-[var(--ink)] transition"></span>
+      </div>
+    </button>
+  </div>
+
+  <div
+    *ngIf="menuOpen()"
+    class="fixed inset-0 z-40 bg-black/40"
+    (click)="closeMenu()"
+    aria-hidden="true"
+  ></div>
+  <aside
+    class="fixed right-0 top-0 z-50 h-full w-72 transform bg-[var(--cream)] px-6 py-8 shadow-[0_20px_40px_rgba(0,0,0,0.2)] transition duration-300 md:hidden"
+    [ngClass]="{
+      'translate-x-0': menuOpen(),
+      'translate-x-full': !menuOpen()
+    }"
+    [attr.aria-hidden]="!menuOpen()"
+  >
+    <div class="flex items-center justify-between">
+      <span class="font-display text-xl tracking-[0.2em] text-[var(--ink)]">
+        {{ siteName }}
+      </span>
+      <button
+        class="rounded-full border border-[var(--gold)]/40 p-2"
+        type="button"
+        aria-label="Zamknij menu"
+        (click)="closeMenu()"
+      >
+        ✕
+      </button>
+    </div>
+    <nav class="mt-8 flex flex-col gap-4 text-sm uppercase tracking-[0.2em]">
+      <a
+        *ngFor="let item of navItems"
+        [href]="item.href"
+        class="text-[var(--ink)]/80 transition hover:text-[var(--ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold-strong)]"
+        (click)="closeMenu()"
+      >
+        {{ item.label }}
+      </a>
+    </nav>
+  </aside>
+</header>

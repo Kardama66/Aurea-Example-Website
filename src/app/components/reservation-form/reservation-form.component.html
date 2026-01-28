@@ -1,0 +1,81 @@
+<section id="rezerwacja" class="scroll-mt-28 py-16 md:py-24">
+  <div class="mx-auto grid max-w-6xl gap-12 px-6 lg:grid-cols-[1.1fr,0.9fr]">
+    <div>
+      <app-section-title
+        eyebrow="Rezerwacja"
+        title="Zarezerwuj stolik online"
+        subtitle="Wypełnij formularz, a my potwierdzimy rezerwację telefonicznie lub mailowo."
+      ></app-section-title>
+      <p class="text-sm text-[color:var(--ink)]/70">
+        Preferujesz rozmowę? Zadzwoń pod numer +48 123 456 789.
+      </p>
+    </div>
+
+    <div class="rounded-3xl border border-[var(--gold)]/20 bg-white/80 p-6 shadow-[0_20px_40px_rgba(0,0,0,0.06)]">
+      <form class="grid gap-4" [formGroup]="form" (ngSubmit)="submit()">
+        <label class="text-xs uppercase tracking-[0.3em] text-[var(--gold-strong)]">
+          Data
+          <input
+            type="date"
+            formControlName="date"
+            class="mt-2 w-full rounded-2xl border border-[var(--gold)]/20 bg-white px-4 py-3 text-sm text-[var(--ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold-strong)]"
+          />
+        </label>
+        <p *ngIf="form.get('date')?.touched && form.get('date')?.invalid" class="text-xs text-red-700">
+          Wybierz datę.
+        </p>
+
+        <label class="text-xs uppercase tracking-[0.3em] text-[var(--gold-strong)]">
+          Godzina
+          <input
+            type="time"
+            formControlName="time"
+            class="mt-2 w-full rounded-2xl border border-[var(--gold)]/20 bg-white px-4 py-3 text-sm text-[var(--ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold-strong)]"
+          />
+        </label>
+        <p *ngIf="form.get('time')?.touched && form.get('time')?.invalid" class="text-xs text-red-700">
+          Wybierz godzinę.
+        </p>
+
+        <label class="text-xs uppercase tracking-[0.3em] text-[var(--gold-strong)]">
+          Liczba osób
+          <input
+            type="number"
+            min="1"
+            max="12"
+            formControlName="guests"
+            class="mt-2 w-full rounded-2xl border border-[var(--gold)]/20 bg-white px-4 py-3 text-sm text-[var(--ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold-strong)]"
+          />
+        </label>
+        <p *ngIf="form.get('guests')?.touched && form.get('guests')?.invalid" class="text-xs text-red-700">
+          Podaj liczbę osób (1–12).
+        </p>
+
+        <label class="text-xs uppercase tracking-[0.3em] text-[var(--gold-strong)]">
+          Telefon lub email
+          <input
+            type="text"
+            formControlName="contact"
+            placeholder="np. anna@email.pl"
+            class="mt-2 w-full rounded-2xl border border-[var(--gold)]/20 bg-white px-4 py-3 text-sm text-[var(--ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold-strong)]"
+          />
+        </label>
+        <p *ngIf="form.get('contact')?.touched && form.get('contact')?.invalid" class="text-xs text-red-700">
+          Podaj poprawny numer telefonu lub adres email.
+        </p>
+
+        <app-button type="submit" variant="primary" className="mt-2 w-full">
+          Wyślij rezerwację
+        </app-button>
+      </form>
+
+      <div
+        *ngIf="submitted()"
+        class="mt-6 rounded-2xl border border-[var(--gold)]/30 bg-[var(--gold)]/10 p-4 text-sm text-[var(--ink)]"
+        role="status"
+      >
+        Dziękujemy! Wkrótce potwierdzimy Twoją rezerwację.
+      </div>
+    </div>
+  </div>
+</section>

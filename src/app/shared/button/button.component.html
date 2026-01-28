@@ -1,0 +1,18 @@
+<a
+  *ngIf="href; else buttonElement"
+  [href]="href"
+  [attr.aria-label]="ariaLabel || null"
+  [class]="buttonClasses"
+>
+  <ng-content></ng-content>
+</a>
+
+<ng-template #buttonElement>
+  <button
+    [type]="type"
+    [attr.aria-label]="ariaLabel || null"
+    [class]="buttonClasses"
+  >
+    <ng-content></ng-content>
+  </button>
+</ng-template>
