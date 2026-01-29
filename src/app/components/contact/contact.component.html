@@ -1,47 +1,47 @@
-<section id="kontakt" class="scroll-mt-28 bg-[var(--sand)]/60 py-16 md:py-24">
-  <div class="mx-auto grid max-w-6xl gap-12 px-6 lg:grid-cols-[0.9fr,1.1fr]">
+<section id="contact" class="scroll-mt-28 bg-[var(--sand)] py-16 md:py-24">
+  <div class="mx-auto grid max-w-6xl gap-12 px-4 sm:px-6 lg:grid-cols-[0.9fr,1.1fr]">
     <div>
       <app-section-title
-        eyebrow="Kontakt"
-        title="Odwiedź nas w centrum Warszawy"
-        subtitle="Rezerwacje przyjmujemy codziennie. Zapraszamy do AUREA."
+        [eyebrow]="contact().eyebrow"
+        [title]="contact().title"
+        [subtitle]="contact().subtitle"
       ></app-section-title>
 
-      <div class="space-y-4 text-sm text-[color:var(--ink)]/80">
+      <div class="space-y-4 text-sm text-[color:var(--text)]/80">
         <div>
           <p class="text-xs uppercase tracking-[0.3em] text-[var(--gold-strong)]">
-            Adres
+            {{ contact().addressLabel }}
           </p>
-          <p class="mt-2">{{ contact.address }}</p>
+          <p class="mt-2">{{ contact().address }}</p>
         </div>
         <div>
           <p class="text-xs uppercase tracking-[0.3em] text-[var(--gold-strong)]">
-            Godziny
+            {{ contact().hoursLabel }}
           </p>
           <ul class="mt-2 space-y-1">
-            <li *ngFor="let hour of contact.hours">
+            <li *ngFor="let hour of contact().hours">
               {{ hour.label }}: {{ hour.value }}
             </li>
           </ul>
         </div>
         <div>
           <p class="text-xs uppercase tracking-[0.3em] text-[var(--gold-strong)]">
-            Telefon / Email
+            {{ contact().phoneLabel }}
           </p>
           <p class="mt-2">
             <a
-              [href]="phoneHref"
-              class="transition hover:text-[var(--ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold-strong)]"
+              [href]="phoneHref()"
+              class="transition hover:text-[var(--text)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold-strong)]"
             >
-              {{ contact.phone }}
+              {{ contact().phone }}
             </a>
           </p>
           <p>
             <a
-              [href]="emailHref"
-              class="transition hover:text-[var(--ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold-strong)]"
+              [href]="emailHref()"
+              class="transition hover:text-[var(--text)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold-strong)]"
             >
-              {{ contact.email }}
+              {{ contact().email }}
             </a>
           </p>
         </div>
@@ -50,11 +50,11 @@
 
     <div class="overflow-hidden rounded-3xl border border-[var(--gold)]/20">
       <iframe
-        title="Mapa dojazdu do AUREA"
+        [attr.title]="contact().mapTitle"
         loading="lazy"
         referrerpolicy="no-referrer-when-downgrade"
         class="h-80 w-full md:h-full"
-        src="https://maps.google.com/maps?q=Nowomiejska%2012%20Warszawa&t=&z=15&ie=UTF8&iwloc=&output=embed"
+        [src]="contact().mapEmbedUrl"
       ></iframe>
     </div>
   </div>

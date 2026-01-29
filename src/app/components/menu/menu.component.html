@@ -1,31 +1,38 @@
-<section id="menu" class="scroll-mt-28 bg-[var(--sand)]/60 py-16 md:py-24">
-  <div class="mx-auto max-w-6xl px-6">
+<section id="menu" class="scroll-mt-28 bg-[var(--sand)] py-16 md:py-24">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
     <app-section-title
-      eyebrow="Menu"
-      title="Sezonowa selekcja AUREA"
-      subtitle="Nasz krótki wybór dań oparty o świeże składniki i autorskie połączenia."
+      [eyebrow]="menuCopy().eyebrow"
+      [title]="menuCopy().title"
+      [subtitle]="menuCopy().subtitle"
     ></app-section-title>
 
-    <div class="grid gap-6 md:grid-cols-3">
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       <article
-        *ngFor="let category of categories"
-        class="rounded-3xl border border-[var(--gold)]/20 bg-white/70 p-6 shadow-[0_20px_40px_rgba(0,0,0,0.06)]"
+        *ngFor="let category of categories()"
+        class="rounded-3xl border border-[var(--gold)]/20 bg-[var(--surface)] p-6 shadow-[0_20px_40px_rgba(0,0,0,0.35)]"
       >
-        <h3 class="font-display text-2xl text-[var(--ink)]">
+        <h3 class="font-display text-2xl text-[var(--text)]">
           {{ category.title }}
         </h3>
         <ul class="mt-4 space-y-5">
           <li *ngFor="let item of category.items" class="space-y-1">
             <div class="flex items-start justify-between gap-4">
-              <p class="font-semibold text-[var(--ink)]">
+              <p class="font-semibold text-[var(--text)]">
                 {{ item.name }}
-                <span *ngIf="item.vegetarian" aria-hidden="true">🌱</span>
+                <span
+                  *ngIf="item.vegetarian"
+                  class="ml-2 text-xs uppercase tracking-[0.2em] text-[var(--gold-strong)]"
+                  role="img"
+                  [attr.aria-label]="menuCopy().vegetarianLabel"
+                >
+                  V
+                </span>
               </p>
               <span class="text-sm font-semibold text-[var(--gold-strong)]">
                 {{ item.price }}
               </span>
             </div>
-            <p class="text-sm text-[color:var(--ink)]/70">
+            <p class="text-sm text-[color:var(--text)]/70">
               {{ item.description }}
             </p>
           </li>
@@ -34,15 +41,15 @@
     </div>
 
     <div class="mt-10 flex flex-wrap items-center justify-between gap-4">
-      <p class="text-sm text-[color:var(--ink)]/70">
-        Pełne menu zawiera dodatkowe propozycje sezonowe i kartę win.
+      <p class="text-sm text-[color:var(--text)]/70">
+        {{ menuCopy().note }}
       </p>
       <a
         href="assets/menu.pdf"
         class="btn btn-outline"
-        aria-label="Pobierz pełne menu w formacie PDF"
+        [attr.aria-label]="menuCopy().downloadAria"
       >
-        Pobierz pełne menu (PDF)
+        {{ menuCopy().downloadLabel }}
       </a>
     </div>
   </div>

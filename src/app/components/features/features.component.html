@@ -1,26 +1,26 @@
 <section class="py-16 md:py-24">
-  <div class="mx-auto max-w-6xl px-6">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
     <app-section-title
-      eyebrow="Dlaczego AUREA"
-      title="Miejsce, w którym wszystko gra"
-      subtitle="Dbamy o każdy detal — od składników, przez obsługę, po atmosferę."
+      [eyebrow]="features().eyebrow"
+      [title]="features().title"
+      [subtitle]="features().subtitle"
     ></app-section-title>
 
     <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
       <article
-        *ngFor="let feature of features"
-        class="rounded-3xl border border-[var(--gold)]/20 bg-white/80 p-6 shadow-[0_20px_40px_rgba(0,0,0,0.05)] transition hover:-translate-y-1 hover:shadow-[0_25px_50px_rgba(0,0,0,0.08)]"
+        *ngFor="let feature of features().items"
+        class="rounded-3xl border border-[var(--gold)]/20 bg-[var(--surface)] p-6 shadow-[0_20px_40px_rgba(0,0,0,0.35)] transition hover:-translate-y-1 hover:shadow-[0_25px_50px_rgba(0,0,0,0.5)]"
       >
         <div
           class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[var(--gold)]/20 text-lg text-[var(--gold-strong)]"
           aria-hidden="true"
         >
-          ✦
+          *
         </div>
-        <h3 class="font-display text-xl text-[var(--ink)]">
+        <h3 class="font-display text-xl text-[var(--text)]">
           {{ feature.title }}
         </h3>
-        <p class="mt-2 text-sm text-[color:var(--ink)]/70">
+        <p class="mt-2 text-sm text-[color:var(--text)]/70">
           {{ feature.description }}
         </p>
       </article>

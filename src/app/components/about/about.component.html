@@ -1,21 +1,21 @@
-<section id="onas" class="scroll-mt-28 py-16 md:py-24">
-  <div class="mx-auto grid max-w-6xl items-center gap-12 px-6 md:grid-cols-2">
+<section id="about" class="scroll-mt-28 py-16 md:py-24">
+  <div class="mx-auto grid max-w-6xl items-center gap-12 px-4 sm:px-6 md:grid-cols-2">
     <div>
       <app-section-title
-        [eyebrow]="about.eyebrow"
-        [title]="about.title"
-        subtitle="Kuchnia, która celebruje rytm miasta."
+        [eyebrow]="about().eyebrow"
+        [title]="about().title"
+        [subtitle]="about().subtitle"
       ></app-section-title>
-      <div class="space-y-4 text-[color:var(--ink)]/80">
-        <p *ngFor="let paragraph of about.paragraphs">
+      <div class="space-y-4 text-[color:var(--text)]/80">
+        <p *ngFor="let paragraph of about().paragraphs">
           {{ paragraph }}
         </p>
       </div>
     </div>
     <div class="relative">
       <img
-        src="assets/about.svg"
-        alt="Detal podania w restauracji AUREA"
+        src="assets/image_01.jpg"
+        [attr.alt]="about().imageAlt"
         loading="lazy"
         class="w-full rounded-3xl object-cover shadow-[0_30px_60px_rgba(0,0,0,0.15)]"
       />

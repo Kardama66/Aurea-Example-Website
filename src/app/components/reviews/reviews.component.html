@@ -1,26 +1,26 @@
-<section id="opinie" class="scroll-mt-28 bg-[var(--ink)] py-16 text-white md:py-24">
-  <div class="mx-auto max-w-6xl px-6">
+<section id="reviews" class="scroll-mt-28 bg-[var(--ink)] py-16 text-[var(--text-inverse)] md:py-24">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
     <app-section-title
-      eyebrow="Opinie"
-      title="Goście kochają atmosferę AUREA"
-      subtitle="Kilka słów od naszych stałych bywalców."
+      [eyebrow]="reviewsCopy().eyebrow"
+      [title]="reviewsCopy().title"
+      [subtitle]="reviewsCopy().subtitle"
       tone="light"
     ></app-section-title>
 
     <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
       <article
-        *ngFor="let review of reviews"
-        class="rounded-3xl border border-white/10 bg-white/5 p-6"
+        *ngFor="let review of reviews()"
+        class="rounded-3xl border border-[var(--text-inverse)]/10 bg-[var(--surface)]/50 p-6"
       >
         <div class="flex items-center gap-1 text-[var(--gold)]">
           <span *ngFor="let star of stars" aria-hidden="true">
-            {{ star <= review.rating ? '★' : '☆' }}
+            {{ star <= review.rating ? '\u2605' : '\u2606' }}
           </span>
         </div>
-        <p class="mt-4 text-sm text-white/80">
-          “{{ review.text }}”
+        <p class="mt-4 text-sm text-[color:var(--text-inverse)]/80">
+          "{{ review.text }}"
         </p>
-        <p class="mt-4 text-xs uppercase tracking-[0.3em] text-white/60">
+        <p class="mt-4 text-xs uppercase tracking-[0.3em] text-[color:var(--text-inverse)]/60">
           {{ review.name }}
         </p>
       </article>

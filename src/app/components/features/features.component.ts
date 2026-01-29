@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { NgFor } from '@angular/common';
-import { SITE } from '../../data/site.data';
 import { SectionTitleComponent } from '../../shared/section-title/section-title.component';
+import { UiStore } from '../../shared/ui-store.service';
 
 @Component({
   selector: 'app-features',
@@ -10,5 +10,6 @@ import { SectionTitleComponent } from '../../shared/section-title/section-title.
   templateUrl: './features.component.html'
 })
 export class FeaturesComponent {
-  readonly features = SITE.features;
+  private readonly ui = inject(UiStore);
+  readonly features = computed(() => this.ui.site().features);
 }

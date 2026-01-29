@@ -1,25 +1,25 @@
 <section class="relative isolate overflow-hidden pt-24 md:pt-28">
   <img
-    src="assets/hero.svg"
-    alt="Elegancka sala restauracji AUREA"
+    src="assets/background.jpg"
+    [attr.alt]="hero().imageAlt"
     loading="lazy"
     class="absolute inset-0 h-full w-full object-cover"
   />
   <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-[var(--cream)]"></div>
-  <div class="relative mx-auto flex min-h-[70vh] max-w-6xl items-end px-6 pb-16 md:pb-24">
+  <div class="relative mx-auto flex min-h-[60vh] max-w-6xl items-end px-4 pb-12 sm:min-h-[70vh] sm:px-6 md:pb-24">
     <div class="max-w-2xl">
       <p class="text-xs uppercase tracking-[0.4em] text-[var(--gold)]">
         AUREA
       </p>
-      <h1 class="font-display mt-4 text-4xl text-white md:text-5xl lg:text-6xl">
-        {{ hero.title }}
+      <h1 class="font-display mt-4 text-3xl text-[var(--text)] sm:text-4xl md:text-5xl lg:text-6xl">
+        {{ hero().title }}
       </h1>
-      <p class="mt-4 text-lg text-white/80 md:text-xl">
-        {{ hero.subtitle }}
+      <p class="mt-4 text-base text-[color:var(--text)]/80 sm:text-lg md:text-xl">
+        {{ hero().subtitle }}
       </p>
       <div class="mt-8">
-        <p class="text-sm uppercase tracking-[0.3em] text-white/60">
-          Otwórz menu i zarezerwuj stolik poniżej
+        <p class="text-xs uppercase tracking-[0.3em] text-[color:var(--text)]/60 sm:text-sm">
+          {{ hero().note }}
         </p>
       </div>
     </div>

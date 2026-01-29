@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { NgFor, NgIf } from '@angular/common';
-import { MENU_CATEGORIES } from '../../data/menu.data';
 import { SectionTitleComponent } from '../../shared/section-title/section-title.component';
+import { UiStore } from '../../shared/ui-store.service';
 
 @Component({
   selector: 'app-menu',
@@ -10,5 +10,7 @@ import { SectionTitleComponent } from '../../shared/section-title/section-title.
   templateUrl: './menu.component.html'
 })
 export class MenuComponent {
-  readonly categories = MENU_CATEGORIES;
+  private readonly ui = inject(UiStore);
+  readonly categories = this.ui.menuCategories;
+  readonly menuCopy = computed(() => this.ui.site().menu);
 }

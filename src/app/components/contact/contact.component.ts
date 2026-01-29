@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { NgFor } from '@angular/common';
-import { SITE } from '../../data/site.data';
 import { SectionTitleComponent } from '../../shared/section-title/section-title.component';
+import { UiStore } from '../../shared/ui-store.service';
 
 @Component({
   selector: 'app-contact',
@@ -10,7 +10,8 @@ import { SectionTitleComponent } from '../../shared/section-title/section-title.
   templateUrl: './contact.component.html'
 })
 export class ContactComponent {
-  readonly contact = SITE.contact;
-  readonly phoneHref = `tel:${SITE.contact.phone.replace(/\s/g, '')}`;
-  readonly emailHref = `mailto:${SITE.contact.email}`;
+  private readonly ui = inject(UiStore);
+  readonly contact = computed(() => this.ui.site().contact);
+  readonly phoneHref = computed(() => `tel:${this.contact().phone.replace(/\s/g, '')}`);
+  readonly emailHref = computed(() => `mailto:${this.contact().email}`);
 }

@@ -3,11 +3,47 @@
 @import "tailwindcss";
 
 :root {
+  color-scheme: light;
   --cream: #f7f1e7;
   --sand: #efe3d3;
   --ink: #1d1a15;
+  --text: #1d1a15;
+  --text-inverse: #f7f1e7;
+  --surface: #ffffff;
+  --surface-strong: #f5ede1;
   --gold: #c6a461;
   --gold-strong: #a4874b;
+  --page-gradient: radial-gradient(circle at top, #fff7ea 0%, var(--cream) 45%, #f1e7d8 100%);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    --cream: #0f0b08;
+    --sand: #1b1510;
+    --ink: #070504;
+    --text: #f7f1e7;
+    --text-inverse: #f7f1e7;
+    --surface: #221a12;
+    --surface-strong: #2c2319;
+    --gold: #d0ad6b;
+    --gold-strong: #f0c987;
+    --page-gradient: radial-gradient(circle at top, #20160f 0%, var(--cream) 55%, #0b0907 100%);
+  }
+}
+
+html[data-theme='dark'] {
+  color-scheme: dark;
+  --cream: #0f0b08;
+  --sand: #1b1510;
+  --ink: #070504;
+  --text: #f7f1e7;
+  --text-inverse: #f7f1e7;
+  --surface: #221a12;
+  --surface-strong: #2c2319;
+  --gold: #d0ad6b;
+  --gold-strong: #f0c987;
+  --page-gradient: radial-gradient(circle at top, #20160f 0%, var(--cream) 55%, #0b0907 100%);
 }
 
 html {
@@ -16,8 +52,8 @@ html {
 
 body {
   font-family: 'Source Sans 3', system-ui, -apple-system, sans-serif;
-  background: radial-gradient(circle at top, #fff7ea 0%, var(--cream) 45%, #f1e7d8 100%);
-  color: var(--ink);
+  background: var(--page-gradient);
+  color: var(--text);
 }
 
 .font-display {
@@ -34,10 +70,14 @@ body {
   }
 
   .btn-outline {
-    @apply border border-[var(--gold)] text-[var(--ink)] hover:bg-[var(--gold)]/15;
+    @apply border border-[var(--gold)] text-[var(--text)] hover:bg-[var(--gold)]/15;
   }
 
   .btn-ghost {
-    @apply text-[var(--ink)] hover:bg-[var(--gold)]/15;
+    @apply text-[var(--text)] hover:bg-[var(--gold)]/15;
+  }
+
+  .toggle-pill {
+    @apply inline-flex items-center gap-2 rounded-full border border-[var(--gold)]/40 bg-transparent px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--text)] transition hover:border-[var(--gold)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold-strong)];
   }
 }

@@ -8,14 +8,14 @@
   </p>
   <h2
     class="font-display mt-2 text-3xl md:text-4xl"
-    [ngClass]="tone === 'light' ? 'text-white' : 'text-[var(--ink)]'"
+    [ngClass]="tone === 'light' ? 'text-[var(--text-inverse)]' : 'text-[var(--text)]'"
   >
     {{ title }}
   </h2>
   <p
     *ngIf="subtitle"
     class="mt-3 max-w-2xl text-base md:text-lg"
-    [ngClass]="tone === 'light' ? 'text-white/75' : 'text-[color:var(--ink)]/80'"
+    [ngClass]="tone === 'light' ? 'text-[color:var(--text-inverse)]/75' : 'text-[color:var(--text)]/80'"
   >
     {{ subtitle }}
   </p>

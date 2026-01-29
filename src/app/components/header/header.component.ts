@@ -1,6 +1,6 @@
-import { Component, HostListener, signal } from '@angular/core';
+import { Component, HostListener, computed, inject, signal } from '@angular/core';
 import { NgClass, NgIf, NgFor } from '@angular/common';
-import { SITE_NAV, SITE } from '../../data/site.data';
+import { UiStore } from '../../shared/ui-store.service';
 
 @Component({
   selector: 'app-header',
@@ -9,10 +9,24 @@ import { SITE_NAV, SITE } from '../../data/site.data';
   templateUrl: './header.component.html'
 })
 export class HeaderComponent {
-  readonly navItems = SITE_NAV;
-  readonly siteName = SITE.name;
+  private readonly ui = inject(UiStore);
+  readonly navItems = this.ui.navItems;
+  readonly siteName = computed(() => this.ui.site().name);
+  readonly headerCopy = computed(() => this.ui.site().header);
+  readonly languageLabel = this.ui.languageLabel;
+  readonly languageAriaLabel = this.ui.languageAriaLabel;
+  readonly themeLabel = this.ui.themeLabel;
+  readonly themeAriaLabel = this.ui.themeAriaLabel;
   readonly menuOpen = signal(false);
   readonly scrolled = signal(false);
+
+  toggleLanguage(): void {
+    this.ui.toggleLanguage();
+  }
+
+  toggleTheme(): void {
+    this.ui.toggleTheme();
+  }
 
   toggleMenu(): void {
     this.menuOpen.update((value) => !value);

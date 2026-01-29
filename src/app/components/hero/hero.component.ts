@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { SITE } from '../../data/site.data';
+import { Component, computed, inject } from '@angular/core';
+import { UiStore } from '../../shared/ui-store.service';
 
 @Component({
   selector: 'app-hero',
@@ -8,5 +8,6 @@ import { SITE } from '../../data/site.data';
   templateUrl: './hero.component.html'
 })
 export class HeroComponent {
-  readonly hero = SITE.hero;
+  private readonly ui = inject(UiStore);
+  readonly hero = computed(() => this.ui.site().hero);
 }
