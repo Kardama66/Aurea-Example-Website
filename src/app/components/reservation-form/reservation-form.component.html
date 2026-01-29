@@ -12,57 +12,138 @@
     </div>
 
     <div class="rounded-3xl border border-[var(--gold)]/20 bg-[var(--surface)] p-6 shadow-[0_20px_40px_rgba(0,0,0,0.35)]">
-      <form class="grid gap-4" [formGroup]="form" (ngSubmit)="submit()">
-        <label class="text-xs uppercase tracking-[0.3em] text-[var(--gold-strong)]">
-          {{ reservationCopy().labels.date }}
-          <input
-            type="date"
-            formControlName="date"
-            class="mt-2 w-full rounded-2xl border border-[var(--gold)]/20 bg-[var(--surface-strong)] px-4 py-3 text-sm text-[var(--text)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold-strong)]"
-          />
-        </label>
-        <p *ngIf="form.get('date')?.touched && form.get('date')?.invalid" class="text-xs text-red-300">
-          {{ reservationCopy().errors.date }}
-        </p>
+      <form class="grid gap-6" [formGroup]="form" (ngSubmit)="submit()">
+        <input type="hidden" formControlName="date" />
+        <input type="hidden" formControlName="time" />
 
-        <label class="text-xs uppercase tracking-[0.3em] text-[var(--gold-strong)]">
-          {{ reservationCopy().labels.time }}
-          <input
-            type="time"
-            formControlName="time"
-            class="mt-2 w-full rounded-2xl border border-[var(--gold)]/20 bg-[var(--surface-strong)] px-4 py-3 text-sm text-[var(--text)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold-strong)]"
-          />
-        </label>
-        <p *ngIf="form.get('time')?.touched && form.get('time')?.invalid" class="text-xs text-red-300">
-          {{ reservationCopy().errors.time }}
-        </p>
+        <div class="grid gap-6 lg:grid-cols-[1.1fr,0.9fr]">
+          <div class="rounded-2xl border border-[var(--gold)]/20 bg-[var(--surface-strong)]/60 p-4 sm:p-5">
+            <div class="flex items-center justify-between">
+              <p class="text-xs uppercase tracking-[0.3em] text-[var(--gold-strong)]">
+                {{ reservationCopy().labels.date }}
+              </p>
+              <p class="text-sm font-semibold text-[var(--text)]">
+                {{ monthLabel() }}
+              </p>
+            </div>
 
-        <label class="text-xs uppercase tracking-[0.3em] text-[var(--gold-strong)]">
-          {{ reservationCopy().labels.guests }}
-          <input
-            type="number"
-            min="1"
-            max="12"
-            formControlName="guests"
-            class="mt-2 w-full rounded-2xl border border-[var(--gold)]/20 bg-[var(--surface-strong)] px-4 py-3 text-sm text-[var(--text)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold-strong)]"
-          />
-        </label>
-        <p *ngIf="form.get('guests')?.touched && form.get('guests')?.invalid" class="text-xs text-red-300">
-          {{ reservationCopy().errors.guests }}
-        </p>
+            <div class="mt-4 grid grid-cols-7 justify-items-center gap-2 text-[10px] uppercase tracking-[0.25em] text-[var(--text)]/60">
+              <span *ngFor="let label of weekdayLabels()" class="text-center">
+                {{ label }}
+              </span>
+            </div>
 
-        <label class="text-xs uppercase tracking-[0.3em] text-[var(--gold-strong)]">
-          {{ reservationCopy().labels.contact }}
-          <input
-            type="text"
-            formControlName="contact"
-            [placeholder]="reservationCopy().contactPlaceholder"
-            class="mt-2 w-full rounded-2xl border border-[var(--gold)]/20 bg-[var(--surface-strong)] px-4 py-3 text-sm text-[var(--text)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold-strong)]"
-          />
-        </label>
-        <p *ngIf="form.get('contact')?.touched && form.get('contact')?.invalid" class="text-xs text-red-300">
-          {{ reservationCopy().errors.contact }}
-        </p>
+            <div class="mt-3 grid grid-cols-7 justify-items-center gap-2">
+              <button
+                type="button"
+                *ngFor="let day of calendarDays"
+                [disabled]="!day.isCurrentMonth || day.isPast"
+                [ngClass]="dayButtonClasses(day)"
+                (click)="selectDate(day)"
+                [attr.aria-pressed]="isSelectedDate(day)"
+                [attr.aria-label]="formatDateForDisplay(day.date)"
+              >
+                {{ day.label }}
+              </button>
+            </div>
+
+            <p *ngIf="form.get('date')?.touched && form.get('date')?.invalid" class="mt-3 text-xs text-red-300">
+              {{ reservationCopy().errors.date }}
+            </p>
+          </div>
+
+          <div class="rounded-2xl border border-[var(--gold)]/20 bg-[var(--surface-strong)]/60 p-4 sm:p-5">
+            <p class="text-xs uppercase tracking-[0.3em] text-[var(--gold-strong)]">
+              {{ reservationCopy().labels.time }}
+            </p>
+
+            <div *ngIf="!selectedDate()" class="mt-4 rounded-2xl border border-[var(--gold)]/15 bg-[var(--surface)] p-4 text-xs text-[var(--text)]/70">
+              {{ reservationCopy().messages.selectDate }}
+            </div>
+
+            <div *ngIf="selectedDate()" class="mt-4 grid gap-3">
+              <div class="flex items-center justify-between text-xs text-[var(--text)]/70">
+                <span>{{ reservationCopy().messages.selectedDate }}</span>
+                <span class="text-[var(--text)] font-semibold">{{ selectedDateLabel() }}</span>
+              </div>
+
+              <div class="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                <button
+                  type="button"
+                  *ngFor="let slot of timeSlots()"
+                  [disabled]="!slot.available"
+                  [ngClass]="timeSlotClasses(slot)"
+                  (click)="selectTime(slot)"
+                  [attr.aria-pressed]="slot.time === selectedTime()"
+                >
+                  <span>{{ slot.time }}</span>
+                  <span *ngIf="!slot.available" class="text-[10px] uppercase tracking-[0.25em]">
+                    {{ reservationCopy().messages.unavailable }}
+                  </span>
+                </button>
+              </div>
+
+              <div class="flex items-center justify-between text-xs text-[var(--text)]/70">
+                <span>{{ reservationCopy().messages.selectedTime }}</span>
+                <span class="text-[var(--text)] font-semibold">
+                  {{ selectedTime() ? selectedTime() : reservationCopy().messages.noTimeSelected }}
+                </span>
+              </div>
+
+              <p *ngIf="form.get('time')?.touched && form.get('time')?.invalid" class="text-xs text-red-300">
+                {{ reservationCopy().errors.time }}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid gap-4 sm:grid-cols-2">
+          <div class="grid gap-2">
+            <label class="text-xs uppercase tracking-[0.3em] text-[var(--gold-strong)]">
+              {{ reservationCopy().labels.guests }}
+              <input
+                type="number"
+                min="1"
+                max="12"
+                formControlName="guests"
+                class="mt-2 w-full rounded-2xl border border-[var(--gold)]/20 bg-[var(--surface-strong)] px-4 py-3 text-sm text-[var(--text)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold-strong)]"
+              />
+            </label>
+            <p *ngIf="form.get('guests')?.touched && form.get('guests')?.invalid" class="text-xs text-red-300">
+              {{ reservationCopy().errors.guests }}
+            </p>
+          </div>
+
+          <div class="grid gap-2">
+            <label class="text-xs uppercase tracking-[0.3em] text-[var(--gold-strong)]">
+              {{ reservationCopy().labels.name }}
+              <input
+                type="text"
+                formControlName="name"
+                [placeholder]="reservationCopy().placeholders.name"
+                class="mt-2 w-full rounded-2xl border border-[var(--gold)]/20 bg-[var(--surface-strong)] px-4 py-3 text-sm text-[var(--text)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold-strong)]"
+              />
+            </label>
+            <p *ngIf="form.get('name')?.touched && form.get('name')?.invalid" class="text-xs text-red-300">
+              {{ reservationCopy().errors.name }}
+            </p>
+          </div>
+
+          <div class="grid gap-2 sm:col-span-2">
+            <label class="text-xs uppercase tracking-[0.3em] text-[var(--gold-strong)]">
+              {{ reservationCopy().labels.phone }}
+              <input
+                type="tel"
+                formControlName="phone"
+                [placeholder]="reservationCopy().placeholders.phone"
+                class="mt-2 w-full rounded-2xl border border-[var(--gold)]/20 bg-[var(--surface-strong)] px-4 py-3 text-sm text-[var(--text)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold-strong)]"
+              />
+            </label>
+            <p *ngIf="form.get('phone')?.touched && form.get('phone')?.invalid" class="text-xs text-red-300">
+              {{ reservationCopy().errors.phone }}
+            </p>
+          </div>
+        </div>
 
         <app-button type="submit" variant="primary" className="mt-2 w-full">
           {{ reservationCopy().submitLabel }}

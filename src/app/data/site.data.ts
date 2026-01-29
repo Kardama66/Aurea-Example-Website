@@ -64,15 +64,27 @@ export interface ReservationSection {
     date: string;
     time: string;
     guests: string;
-    contact: string;
+    name: string;
+    phone: string;
+  };
+  messages: {
+    selectDate: string;
+    selectedDate: string;
+    selectedTime: string;
+    noTimeSelected: string;
+    unavailable: string;
   };
   errors: {
     date: string;
     time: string;
     guests: string;
-    contact: string;
+    name: string;
+    phone: string;
   };
-  contactPlaceholder: string;
+  placeholders: {
+    name: string;
+    phone: string;
+  };
   submitLabel: string;
   successMessage: string;
 }
@@ -223,21 +235,33 @@ export const SITE: Record<Language, SiteData> = {
     reservation: {
       eyebrow: 'Reservations',
       title: 'Reserve a table online',
-      subtitle: 'Fill out the form and we\'ll confirm by phone or email.',
+      subtitle: 'Fill out the form and we\'ll confirm by phone.',
       note: 'Prefer to talk? Call us at +48 123 456 789.',
       labels: {
         date: 'Date',
-        time: 'Time',
+        time: 'Available times',
         guests: 'Guests',
-        contact: 'Phone or email'
+        name: 'Name',
+        phone: 'Phone number'
+      },
+      messages: {
+        selectDate: 'Select a date to see available times.',
+        selectedDate: 'Selected date',
+        selectedTime: 'Selected time',
+        noTimeSelected: 'Choose a time slot.',
+        unavailable: 'Unavailable'
       },
       errors: {
         date: 'Please choose a date.',
         time: 'Please choose a time.',
         guests: 'Enter the number of guests (1-12).',
-        contact: 'Enter a valid phone number or email address.'
+        name: 'Enter your name.',
+        phone: 'Enter a valid phone number.'
       },
-      contactPlaceholder: 'e.g. anna@email.com',
+      placeholders: {
+        name: 'e.g. Anna Kowalska',
+        phone: 'e.g. +48 123 456 789'
+      },
       submitLabel: 'Send reservation',
       successMessage: 'Thank you! We\'ll confirm your reservation shortly.'
     },
@@ -347,21 +371,33 @@ export const SITE: Record<Language, SiteData> = {
     reservation: {
       eyebrow: 'Rezerwacja',
       title: 'Zarezerwuj stolik online',
-      subtitle: 'Wype\u0142nij formularz, a my potwierdzimy rezerwacj\u0119 telefonicznie lub mailowo.',
+      subtitle: 'Wype\u0142nij formularz, a my potwierdzimy rezerwacj\u0119 telefonicznie.',
       note: 'Preferujesz rozmow\u0119? Zadzwo\u0144 pod numer +48 123 456 789.',
       labels: {
         date: 'Data',
-        time: 'Godzina',
+        time: 'Dost\u0119pne godziny',
         guests: 'Liczba os\u00f3b',
-        contact: 'Telefon lub email'
+        name: 'Imi\u0119 i nazwisko',
+        phone: 'Numer telefonu'
+      },
+      messages: {
+        selectDate: 'Wybierz dat\u0119, aby zobaczy\u0107 dost\u0119pne godziny.',
+        selectedDate: 'Wybrana data',
+        selectedTime: 'Wybrana godzina',
+        noTimeSelected: 'Wybierz godzin\u0119.',
+        unavailable: 'Niedost\u0119pne'
       },
       errors: {
         date: 'Wybierz dat\u0119.',
         time: 'Wybierz godzin\u0119.',
         guests: 'Podaj liczb\u0119 os\u00f3b (1-12).',
-        contact: 'Podaj poprawny numer telefonu lub adres email.'
+        name: 'Podaj imi\u0119 i nazwisko.',
+        phone: 'Podaj poprawny numer telefonu.'
       },
-      contactPlaceholder: 'np. anna@email.pl',
+      placeholders: {
+        name: 'np. Anna Kowalska',
+        phone: 'np. +48 123 456 789'
+      },
       submitLabel: 'Wy\u015blij rezerwacj\u0119',
       successMessage: 'Dzi\u0119kujemy! Wkr\u00f3tce potwierdzimy Twoj\u0105 rezerwacj\u0119.'
     },

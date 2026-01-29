@@ -1,5 +1,6 @@
 import { Component, computed, inject } from '@angular/core';
 import { NgFor } from '@angular/common';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { SectionTitleComponent } from '../../shared/section-title/section-title.component';
 import { UiStore } from '../../shared/ui-store.service';
 
@@ -11,7 +12,11 @@ import { UiStore } from '../../shared/ui-store.service';
 })
 export class ContactComponent {
   private readonly ui = inject(UiStore);
+  private readonly sanitizer = inject(DomSanitizer);
   readonly contact = computed(() => this.ui.site().contact);
   readonly phoneHref = computed(() => `tel:${this.contact().phone.replace(/\s/g, '')}`);
   readonly emailHref = computed(() => `mailto:${this.contact().email}`);
+  readonly mapUrl = computed<SafeResourceUrl>(() =>
+    this.sanitizer.bypassSecurityTrustResourceUrl(this.contact().mapEmbedUrl)
+  );
 }
